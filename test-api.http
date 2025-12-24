@@ -1,0 +1,20 @@
+### Listar tarefas
+GET http://localhost:3000/tasks
+
+### Criar tarefa
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "Comprar leite",
+  "category": "Casa"
+}
+
+### Criar outra tarefa
+POST http://localhost:3000/tasks
+Content-Type: application/json
+
+{
+  "title": "Enviar email",
+  "category": "Trabalho"
+}
