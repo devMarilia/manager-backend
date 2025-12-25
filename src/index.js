@@ -1,45 +1,47 @@
 const express = require("express");
+const path = require("path");
 const app = express();
+
+// Middleware para CORS - permite requisições do navegador
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// Middleware para parsear JSON
 app.use(express.json());
 
-// Importar login e tarefas
-const login = require("./auth/login");
-const tasks = require("./tasks"); // importar o array de tarefas
+// Servir arquivos estáticos (index.html)
+app.use(express.static(path.join(__dirname, "..")));
+
+// Importar as rotas
+const authRoutes = require("./routes/authRoutes");
+const taskRoutes = require("./routes/taskRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 // Rota de teste
 app.get("/", (req, res) => {
-  res.json({ message: "API rodando com sucesso 🚀" });
+  res.json({ 
+    message: "API de Gerenciamento de Tarefas 🚀",
+    versao: "1.0.0"
+  });
 });
 
-// Rota de login
-app.post("/login", login);
+// Usar as rotas
+app.use("/auth", authRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/reports", reportRoutes);
 
-// Rota para listar tarefas
-app.get("/tasks", (req, res) => {
-  res.json(tasks);
+// Middleware para rotas não encontradas
+app.use((req, res) => {
+  res.status(404).json({ message: "Rota não encontrada" });
 });
-
-// Rota para criar uma nova tarefa
-app.post("/tasks", (req, res) => {
-  const { title, category } = req.body; // pegar título e categoria do corpo da requisição
-
-  if (!title || !category) {
-    return res.status(400).json({ message: "Título e categoria são obrigatórios" });
-  }
-
-  // Criar tarefa com ID simples
-  const task = {
-    id: tasks.length + 1,
-    title,
-    category,
-    done: false // status inicial
-  };
-
-  tasks.push(task); // adicionar ao array
-
-  res.status(201).json(task); // retornar a tarefa criada
-});
-
 
 const PORT = 3000;
 app.listen(PORT, () => {
