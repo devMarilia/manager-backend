@@ -55,9 +55,8 @@ Armazena usuários e tarefas em memória (reseta quando reinicia).
 
 ```javascript
 const database = {
-  users: [ ... ],    // Lista de usuários
-  tasks: [ ... ]     // Lista de tarefas
-};
+  users: [ ... ],    
+  tasks: [ ... ]     
 ```
 
 ### 2. **middleware/auth.js** - Autenticação
