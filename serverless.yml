@@ -8,58 +8,88 @@ provider:
   timeout: 30
 
 functions:
-  # 🏠 Rota raiz
-  hello:
-    handler: handlers.hello
+  # 🏠 Health Check
+  health:
+    handler: src/lambdas/health.handler
     events:
       - http:
           path: /
           method: get
           cors: true
 
-  # 📋 Tarefas - Listar
-  getTasks:
-    handler: handlers.getTasks
+  # 📋 TAREFAS
+  listTasks:
+    handler: src/lambdas/tasks/get.list
     events:
       - http:
           path: tasks
           method: get
           cors: true
 
-  # 📋 Tarefas - Criar
+  getTask:
+    handler: src/lambdas/tasks/get.get
+    events:
+      - http:
+          path: tasks/{id}
+          method: get
+          cors: true
+
   createTask:
-    handler: handlers.createTask
+    handler: src/lambdas/tasks/mutate.create
     events:
       - http:
           path: tasks
           method: post
           cors: true
 
-  # 📋 Tarefas - Atualizar
   updateTask:
-    handler: handlers.updateTask
+    handler: src/lambdas/tasks/mutate.update
     events:
       - http:
           path: tasks/{id}
           method: put
           cors: true
 
-  # 📋 Tarefas - Deletar
   deleteTask:
-    handler: handlers.deleteTask
+    handler: src/lambdas/tasks/mutate.delete
     events:
       - http:
           path: tasks/{id}
           method: delete
           cors: true
 
-  # 📊 Relatórios
-  getReports:
-    handler: handlers.getReports
+  # 📊 RELATÓRIOS
+  listReports:
+    handler: src/lambdas/reports/index.list
     events:
       - http:
           path: reports
           method: get
+          cors: true
+
+  getReport:
+    handler: src/lambdas/reports/index.get
+    events:
+      - http:
+          path: reports/{id}
+          method: get
+          cors: true
+
+  # 🔐 AUTENTICAÇÃO
+  login:
+    handler: src/lambdas/auth/index.login
+    events:
+      - http:
+          path: auth/login
+          method: post
+          cors: true
+
+  register:
+    handler: src/lambdas/auth/index.register
+    events:
+      - http:
+          path: auth/register
+          method: post
           cors: true
 
 plugins:
@@ -67,6 +97,7 @@ plugins:
 
 custom:
   serverless-offline:
-    httpPort: 3001
+    httpPort: 3000
+    host: 0.0.0.0
     stage: dev
     noPrependStageInUrl: true
