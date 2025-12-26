@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "node src/index.js"
+    "dev": "node src/index.js",
+    "serverless": "serverless offline start",
+    "serverless:start": "serverless offline start --httpPort 3001",
+    "deploy": "serverless deploy"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +20,7 @@
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
-    "serverless": "^4.29.0",
+    "serverless": "^3.40.0",
     "serverless-offline": "^14.4.0"
   }
 }

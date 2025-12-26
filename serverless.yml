@@ -1,0 +1,24 @@
+service: manager-backend
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+
+functions:
+  getTasks:
+    handler: src/handlers.getTasks
+    events:
+      - http:
+          path: tasks
+          method: get
+          cors: true
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3001
+    websocketPort: 3002
+    lambdaPort: 3003
