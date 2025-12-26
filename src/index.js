@@ -1,10 +1,15 @@
+// Carrega variáveis de ambiente
+require("dotenv").config();
+
 const express = require("express");
 const path = require("path");
+const config = require("./config");
+
 const app = express();
 
 // Middleware para CORS - permite requisições do navegador
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", config.corsOrigin);
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   
@@ -29,7 +34,9 @@ const reportRoutes = require("./routes/reportRoutes");
 app.get("/", (req, res) => {
   res.json({ 
     message: "API de Gerenciamento de Tarefas 🚀",
-    versao: "1.0.0"
+    versao: "1.0.0",
+    ambiente: config.nodeEnv,
+    porta: config.port
   });
 });
 
@@ -43,7 +50,10 @@ app.use((req, res) => {
   res.status(404).json({ message: "Rota não encontrada" });
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+app.listen(config.port, () => {
+  console.log(`\n🚀 Servidor rodando em ${config.apiUrl}`);
+  console.log(`📝 Ambiente: ${config.nodeEnv.toUpperCase()}`);
+  console.log(`🔐 JWT Secret configurado: ${config.jwtSecret ? "✅" : "❌"}`);
+  console.log(` Log Level: ${config.logLevel}`);
+  console.log(`\n✨ Pronto para receber requisições!\n`);
 });

@@ -2,7 +2,29 @@
 
 Uma aplicação simples e didática de gerenciamento de tarefas com autenticação, CRUD completo, colaboração entre usuários e relatórios.
 
-## 📋 Funcionalidades
+## � Setup Rápido
+
+### 1. Instalar Dependências
+```bash
+npm install
+```
+
+### 2. Configurar Variáveis de Ambiente
+```bash
+cp .env.example .env
+# Edite o arquivo .env com suas configurações
+```
+
+### 3. Executar Servidor
+```bash
+npm start
+```
+
+A API estará disponível em `http://localhost:3000`
+
+---
+
+## �📋 Funcionalidades
 
 ✅ **Autenticação JWT** - Login e cadastro de usuários  
 ✅ **CRUD de Tarefas** - Criar, listar, atualizar e deletar tarefas  
