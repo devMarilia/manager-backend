@@ -2,8 +2,8 @@
  * 🏠 Lambda Handler - Health Check
  */
 
-const { success, log } = require('../../utils/response');
-const config = require('../../config');
+const { success, log } = require('../utils/response');
+const config = require('../config');
 
 /**
  * GET / - Health check / Info da API
