@@ -59,8 +59,16 @@ exports.error = (statusCode = 500, message = 'Erro interno', error = null) => {
  * @returns {object} Objeto parseado
  */
 exports.parseBody = (body) => {
+  if (!body) return {};
+  if (typeof body === 'object') {
+    return body;
+  }
   if (typeof body === 'string') {
-    return JSON.parse(body);
+    try {
+      return JSON.parse(body);
+    } catch (e) {
+      return {};
+    }
   }
   return body || {};
 };
